@@ -1,0 +1,34 @@
+# 一樣第一步先安裝youtube-dl
+# 在你想下載的頻道的名稱那邊輸入頻道的英文名稱,有點像是Line官方帳號的ID那樣,組成方式是@後面加一串英文和數字的組合,簡單來說url就是該頻道的連結
+# 這個代碼是針對下載youtube影片字幕檔,不下載影片,如果你要下載影片的話,請把第17行的skip_download刪除
+
+# 安裝youtube_dl
+!pip install youtube_dl
+
+
+import youtube_dl
+
+# 設定參數(記得在url處後面替換為你想下載的頻道連結)
+url = 'https://www.youtube.com/@ProductivityRush'
+ydl_opts = {
+    'writesubtitles': 'best',
+    'outtmpl': '%(title)s.%(ext)s',
+    'subtitleslangs': 'en',
+    'skip_download': True
+}
+
+# 如果沒有資料夾請新增一個(輸入你要儲存到的資料夾名稱,如果沒有會自己新建一個)
+import os
+
+if not os.path.exists('ProductivityRush'):
+  os.mkdir('ProductivityRush')
+
+# 下載到google雲端硬碟的指定資料夾"ProductivityRush"(將下面的ProductivityRush換成前面你要儲存的資料夾名稱)
+from google.colab import drive
+drive.mount('drive')
+
+ydl_opts['outtmpl'] = 'drive/My Drive/ProductivityRush/%(title)s.%(ext)s'
+
+# 下載
+with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+    ydl.download([url])
