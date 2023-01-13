@@ -1,0 +1,38 @@
+# 在Google Colab上運行你的代碼,並且確認有在GCP (Google Cloud)上打開你的Google Drive API
+# 另外在GCP跟Google Colab上第一次設定可能會包括一些複雜的步驟,主要就是設定你的帳戶為付款人信箱,並且連接你的專案代碼什麼的(有點忘記了)
+# 在後面代碼運行的過程中Google Colab會要求你確定要讓Google Drive和Google Colab上的程序進行連接
+
+# first you need to install yt-dl
+# 打開google colab 在輸入代碼的第一個欄裡面進行youtube-dl的安裝
+!pip install youtube-dl
+
+
+# 在第二個欄位中加入以下代碼運行程序,在設定參數中url那行的冒號中輸入你要下載的播放清單即可下載,我預設是下載最小畫質,然後開始運行就可以了,有時候會出一些錯誤,我會選擇重新運行
+# 歡迎告訴代碼運行過程中遇到了哪些問題,你怎麼解決的..諸如此類的問題,不過我也沒有程式背景,比較沒辦法解決代碼中發生的問題,需要請高手來幫忙和多多指教!
+# 記得在url那欄將文字部分替換掉,輸入你要下載的播放清單網址,然後在後面的代碼設定你想要下載的指定資料夾,我的預設是'my-yt-playlist'
+
+import youtube_dl
+
+# 設定參數
+url = '這裡輸入你要下載的播放清單網址'
+ydl_opts = {
+    'format': 'bestvideo[height<=144]+bestaudio',
+    'outtmpl': '%(title)s.%(ext)s',
+    'yesplaylist':True
+}
+
+# 如果沒有資料夾請新增一個
+import os
+if not os.path.exists('my-yt-playlist'):
+  os.mkdir('my-yt-playlist')
+
+
+# 下載到google雲端硬碟的指定資料夾"my-yt-playlist"
+from google.colab import drive
+drive.mount('drive')
+
+ydl_opts['outtmpl'] = 'drive/My Drive/my-yt-playlist/%(title)s.%(ext)s'
+
+# 下載
+with youtube_dl.YoutubeDL(ydl_opts) as ydl:
+    ydl.download([url])
