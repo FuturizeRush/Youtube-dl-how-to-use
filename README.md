@@ -46,3 +46,5 @@ cloud convert轉檔需要網路連接且有一定的轉檔時間
 youtube-dl和cloud convert的使用最好在colab或是其他雲端環境中使用，因為它們需要網路連接
 在將檔案上傳到cloud storage之前，建議先將檔案壓縮，可以節省上傳的時間
 google speech to text的語音轉文字功能需要一定的語音資料，如果音檔短小可能無法正確轉換
+
+進階玩法可以使用google translation api, text-to-speech 和 Open AI GPT-3等功能結合機器學習和自動化流程開發應用,現階段極具商業潛力
